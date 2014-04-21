@@ -46,10 +46,13 @@ $posts = g::posts(
 				if ( $latest_comment_count == 0 ) $no_comment = 'no-comment';
 				else $no_comment = '';
 				
-				$latest_img = get_list_thumbnail( $p['bo_table'] , $p['wr_id'], 38, 38);
-
-				if ( !$latest_img ) $img = x::url_theme().'/img/no-image.png';
-				else $img = $latest_img['src'];
+				$latest_img = x::post_thumbnail( $p['bo_table'] , $p['wr_id'], 38, 38);
+				$img = $latest_img['src'];
+				if ( empty($img) ) {
+					$_wr_content = db::result("SELECT wr_content FROM $g5[write_prefix]$_bo_table WHERE wr_id='$p[wr_id]'");
+					$img = x::thumbnail_from_image_tag($_wr_content, $_bo_table, 38, 38);
+					if ( empty($img) ) $img = x::url_theme().'/img/no-image.png';
+				}
 				if( $i == $ctr ) $last_post = "class='last-item'";
 				else $last_post = '';
 	
