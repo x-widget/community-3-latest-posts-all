@@ -49,8 +49,8 @@ $posts = g::posts(
 				$latest_img = x::post_thumbnail( $p['bo_table'] , $p['wr_id'], 38, 38);
 				$img = $latest_img['src'];
 				if ( empty($img) ) {
-					$_wr_content = db::result("SELECT wr_content FROM $g5[write_prefix]$_bo_table WHERE wr_id='$p[wr_id]'");
-					$img = x::thumbnail_from_image_tag($_wr_content, $_bo_table, 38, 38);
+					$_wr_content = db::result("SELECT wr_content FROM $g5[write_prefix]$p[bo_table] WHERE wr_id='$p[wr_id]'");
+					$img = x::thumbnail_from_image_tag($_wr_content, $p['bo_table'], 38, 38);
 					if ( empty($img) ) $img = x::url_theme().'/img/no-image.png';
 				}
 				if( $i == $ctr ) $last_post = "class='last-item'";
